@@ -1,0 +1,41 @@
+{
+  "name": "fullstacksus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "bootstrap": "^5.0.0-beta3",
+    "bootstrap-icons": "^1.4.1",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0",
+    "express-session": "^1.17.1",
+    "filepond": "^4.26.1",
+    "flash": "^1.1.0",
+    "method-override": "^3.0.0",
+    "mongodb": "^3.6.6",
+    "mongoose": "^5.12.4",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "node-fetch": "^2.6.1",
+    "nodemon": "^2.0.7",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^6.1.0",
+    "uuidv4": "^6.2.7"
+  },
+  "devDependencies": {
+    "env": "^0.0.2"
+  }
+}

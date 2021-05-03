@@ -1,0 +1,47 @@
+<nav class="navbar navbar-dark navbar-expand fixed-top bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/home"><%= pageTitle %>  /</a>
+        <% if (locals.currentUser == pageQuery) { %>
+            <a class="navbar-brand" href="/account"><%= pageQuery %></a>
+        <% } else { %>
+            <a class="navbar-brand" href="/<%= pageQuery %>"><%= pageQuery %></a>
+        <% } %>
+    <div class="icon" onclick="toggleForm()">
+<div class="hamburger">
+</div>
+</div>
+        <div class="collapse navbar-collapse" id="navcol-1">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link main-item" href="/home">Home&nbsp; &nbsp;<i class="fa fa-home"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link main-item" href="/trending">Trending&nbsp; &nbsp;<i class="bi bi-arrow-down-up"></i></a>
+                </li>
+                <li class="nav-item">
+                    <div class="btn-group">
+                        <button type="button" class="btn-secondary btn nav-link">
+                            <a href="/account">
+                                Account
+                            </a>
+                        </button>
+                        <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <% if (login) { %>
+                                <a href="/account" class="dropdown-item">My Account&nbsp; &nbsp;<i class="bi bi-person-circle"></i></a>
+                                <a href="/account/<%= pageQuery %>/posts/new" class="dropdown-item">New Post&nbsp; &nbsp;<i class="bi bi-file-plus"></i></a>
+                                <div class="dropdown-divider"></div>
+                                <form action="/account/logout" method="POST">
+                                    <button class="dropdown-item">Logout&nbsp; &nbsp;<i class="bi bi-arrow-right-circle"></i></button>
+                                </form>
+                            <% } else { %>
+                                <a href="/account" class="dropdown-item">Sign Up/Sign In&nbsp; &nbsp;<i class="bi bi-box-arrow-up-right"></i></a>
+                            <% } %>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

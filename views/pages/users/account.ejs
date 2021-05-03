@@ -1,0 +1,42 @@
+<section class="signInSec">
+    <% if (locals.location == "login") { %>
+        <div class="account-container active">
+    <% } else { %>
+        <div class="account-container">
+    <% } %>
+        <div class="user SignUpBx">
+            <div class="imgBx">
+                <img src="images/SignUp.jpg" alt="">
+            </div>
+            <div class="formBx">
+                <form action="/account" method="POST" class="make-account-form">
+                    <h2>Sign Up</h2>
+                    <%- include('../../partials/messageHandler'); %>
+                    <input type="text" name="userNameSignUp" placeholder="Username">
+                    <input type="password" name="userPasswordSignUp" placeholder="Password">
+                    <input type="password" name="userPasswordSignUpConfirm" placeholder="Confirm Password">
+                    <input type="hidden" name="formType" value="SignUp">
+                    <input type="submit" value="Create Account">
+                    <p class="SwitchForm">Already have an account ? <a href="#" onclick="toggleForm();">Sign In.</a></p>
+                </form>
+            </div>
+        </div>
+
+        <div class="user SignInBx">
+            <div class="formBx">
+                <form action="" method="POST">
+                    <h2>Sign In</h2>
+                    <%- include('../../partials/messageHandler'); %>
+                    <input type="text" name="username" placeholder="Username">
+                    <input type="password" name="password" placeholder="Password">
+                    <input type="hidden" name="formType" value="SignIn">
+                    <input type="submit" value="Login">
+                    <p class="SwitchForm">Don't have an account ? <a href="#" onclick="toggleForm();">Sign Up.</a></p>
+                </form>
+            </div>
+            <div class="imgBx">
+                <img src="images/SignIn.jpg" alt="">
+            </div>
+        </div>
+    </div>
+</section>

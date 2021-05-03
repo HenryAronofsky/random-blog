@@ -1,0 +1,10 @@
+<div>
+    <%- include('../../partials/messageHandler'); %>
+    <% if (!locals.user.userImageJson.includes("defaultUser")) { %>
+        <img src="data:image/png;base64,<%= user.userImageJson %>" alt="profile picture">
+    <% } else { %>
+        <img src="<%= user.userImageJson %>" alt="profile picture">
+    <% } %>
+    <h2><%= user.userName %></h2>
+    <p><%= user.userDescription%></p>
+</div>

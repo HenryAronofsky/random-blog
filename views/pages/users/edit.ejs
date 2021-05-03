@@ -1,0 +1,8 @@
+<%- include('../../partials/messageHandler'); %>
+<form action="/account/<%= pageQuery %>/edit?_method=PUT" method="POST">
+    <input type="hidden" name="_method" value="PUT">
+    <input type="file" name="file">
+    <input type="text" name="name" value="<%= user.userName %>">
+    <input type="text" name="description" value="<%= user.userDescription %>">
+    <input type="submit" value="Update">
+</form>

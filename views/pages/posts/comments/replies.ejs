@@ -1,0 +1,18 @@
+<div>
+    <br>
+    ---
+    <b><%= reply.author %></b>
+    <p><%= reply.content %></p>
+    <% if (currentUser == reply.author) { %>
+            <a class="toggleEdit" href="#">Edit Reply</a>
+            <form style="display: none;" class="reply-edit-form" action="/account/<%= pageQuery %>/posts/<%= thisPost._id %>/comments/<%= reply.commentId %>/reply/<%= reply._id %>?_method=PUT" method="POST">
+                <input type="text" name="updatedReply" value="<%= reply.content %>">
+                <input type="submit" value="Edit Reply">
+                <a class="toggleEdit" href="#">Cancel</a>
+            </form>
+            <form class="reply-delete-form" action="/account/<%= pageQuery %>/posts/<%= thisPost._id %>/comments/<%= reply.commentId %>/reply/<%= reply._id %>?_method=DELETE" method="POST">
+                <input type="submit" value="Delete reply">
+            </form>
+    <% } %>
+    <%- include('./repliesMake', {thisComment}) %>
+</div>

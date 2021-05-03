@@ -1,0 +1,5 @@
+<%- include('../../partials/messageHandler'); %>
+<input type="file" name="file">
+<input type="text" name="title" value="<%= locals.post ? post.title : '' %>">
+<input type="text" name="content" value="<%= locals.post ? post.content : '' %>">
+<input type="submit" value="Post">

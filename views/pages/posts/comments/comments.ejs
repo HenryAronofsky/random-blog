@@ -1,0 +1,23 @@
+<div>
+    <b>
+        <%= thisComment.author %>
+    </b>
+    <h5><%= thisComment.content %></h5>
+    <% if (currentUser == thisComment.author) { %>
+        <a class="toggleEdit" href="#">Edit Comment</a>
+        <form style="display: none;" class="comment-edit-form" action="/account/<%= pageQuery %>/posts/<%= thisPost._id %>/comments/<%= thisComment._id %>?_method=PUT" method="POST">
+            <input type="text" name="updatedComment" value="<%= thisComment.content %>">
+            <input type="submit" value="Edit Comment">
+            <a class="toggleEdit" href="#">Cancel</a>
+        </form>
+        <form class="comment-delete-form" action="/account/<%= pageQuery %>/posts/<%= thisPost._id %>/comments/<%= thisComment._id %>?_method=DELETE" method="POST">
+            <input type="submit" value="Delete Comment">
+        </form>
+    <% } %>
+    <%- include('./repliesMake', {thisComment}) %>
+    <div class="reply-section">
+        <% [...thisComment.replies].reverse().forEach(reply => { %>
+            <%- include('./replies', { reply: JSON.parse(reply) }) %>
+        <% }) %>
+    </div>
+</div>

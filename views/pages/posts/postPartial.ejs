@@ -1,0 +1,31 @@
+<input type="hidden" value="<%= currentUser %>" id="inputUser">
+<hr>
+<div>
+    <h2><%= thisPost.title %></h2>
+    <% if (thisPost.imageJson != '') { %>
+        <img src="data:image/png;base64,<%= thisPost.imageJson %>" alt="postImage">
+    <% } %>
+    <p><%= thisPost.content %></p>
+    <a href="/account/<%= pageQuery%>/posts/<%= thisPost.id %>"><%= thisPost.title %></a>
+    <a href="/account/<%= pageQuery%>"><%= pageQuery %></a>
+    <p><%= thisPost.date %></p>
+    <% if (currentUser == thisPost.author) { %>
+        <a href="/account/<%= pageQuery%>/posts/<%= thisPost.id %>/edit">Edit Post</a>
+        <form action="/account/<%= pageQuery %>/posts/<%= thisPost._id %>?_method=DELETE" method="POST">
+            <input type="submit" value="Delete Post">
+        </form>
+    <% } %>
+    <h3>Comments:</h3>
+    <% if (login) { %>
+        <%- include('./comments/commentMakePartial') %>
+    <% } %>
+    <div class="comment-section">
+        <% thisPost.comments.reverse().forEach(comment => { %>
+            <div>
+                <% let thisComment = JSON.parse(comment) %>
+                <%- include('./comments/comments', {thisComment}) %>
+            </div>
+        <% }) %>
+    </div>
+</div>
+<hr>

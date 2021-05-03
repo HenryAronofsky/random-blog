@@ -1,0 +1,19 @@
+<% if (locals.errorMessage != null && locals.errorMessage != []) { %>
+    <p id="errorMessage">
+       <%  if (errorMessage.length > 0) { %>
+            <% errorMessage.forEach(msg => { %>
+                <div class="alert alert-danger alert-dismissible fade show">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  <strong>Error!</strong> <%= msg %>
+                </div>
+            <% }) %>
+        <% } %>
+    </p>
+<% } %>
+
+<% if (locals.successMessage != null) { %>
+    <div class="alert alert-success alert-dismissible fade show">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Success!</strong> <%= successMessage %>
+    </div>
+<% } %>

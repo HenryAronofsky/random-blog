@@ -1,0 +1,28 @@
+<ul>
+    <% if (login && currentUser == pageQuery)  { %>
+        <li>
+            <a href="/account/<%= pageQuery %>">My Account</a>
+        </li>
+        <% if (locals.accountHome) { %>
+            <li>
+                <a href="/account/<%= pageQuery %>/edit">Edit Account</a>
+            </li>
+            <form action="/account/<%= pageQuery %>?_method=DELETE" method="POST">
+                <input type="submit" value="Delete Account">
+            </form>
+        <% } %>
+        <li>
+            <a href="/account/<%= pageQuery %>/posts/new">New Post</a>
+        </li>
+        <li>
+            <a href="/account/<%= pageQuery %>/posts">My Posts</a>
+        </li>
+    <% } else { %>
+        <li>
+            <a href="/account/<%= pageQuery %>"><%= pageQuery%></a>
+        </li>
+        <li>
+            <a href="/account/<%= pageQuery %>/posts">Posts By <%= pageQuery%></a>
+        </li>
+    <% } %>
+</ul>
