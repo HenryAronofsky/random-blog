@@ -3,7 +3,7 @@ $(".comment-make-form").on("submit", function(e) {
     const queryUrl = $(this)[0].action.split("/")
 
     let data = {};
-    data.content = sanitizeData($("#content").val());
+    data.content = $("#content").val();
     $("#content").val("");
 
     if ($.trim(data.content) == '') {
@@ -19,7 +19,7 @@ $(".comment-make-form").on("submit", function(e) {
     });
 
     let userName = $('#inputUser').val()
-    $('.comment-section').prepend(`<p><b>${userName}</b> ${data.content}</p>`)
+    $('.comment-section').prepend(`<p><b>${userName}</b> ${sanitizeData(data.content)}</p>`)
 });
 
 $(".comment-delete-form").on("submit", function(e) {
@@ -53,7 +53,7 @@ $(".comment-edit-form").on("submit", function(e) {
     const queryUrl = $(this)[0].action.split("/")
 
     let data = {};
-    data.updatedComment = sanitizeData($(this).children().first().val());
+    data.updatedComment = $(this).children().first().val();
 
     $.ajax({
         type: "POST",
@@ -72,7 +72,7 @@ $(".reply-make-form").on("submit", function(e) {
     const queryUrl = $(this)[0].action.split("/")
 
     let data = {};
-    data.reply = sanitizeData($(this).children().first().val());
+    data.reply = $(this).children().first().val();
 
     if ($.trim(data.reply) == '') {
         $(this).prepend('<div class="alert alert-danger alert-dismissible fade show"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Please fill out field')
@@ -81,10 +81,10 @@ $(".reply-make-form").on("submit", function(e) {
 
     let userName = $('#inputUser').val()
     if ($(this).next()[0] != undefined) {
-        $(this).next().prepend(`<br>--- <b>${userName}</b> ${data.reply}`)
+        $(this).next().prepend(`<br>--- <b>${userName}</b> ${sanitizeData(data.reply)}`)
     } else {
         data.reply = `@${$(this).siblings('b').text()} ${$(this).children().first().val()}`;
-        $(this).parent().parent().prepend(`<br>--- <b>${userName}</b> ${data.reply}`)
+        $(this).parent().parent().prepend(`<br>--- <b>${userName}</b> ${sanitizeData(data.reply)}`)
     }
     
     $(this).children().first().val("");
@@ -119,7 +119,7 @@ $(".reply-edit-form").on("submit", function(e) {
     const queryUrl = $(this)[0].action.split("/")
 
     let data = {};
-    data.updatedReply = sanitizeData($(this).children().first().val());
+    data.updatedReply = $(this).children().first().val();
 
     $.ajax({
         type: "POST",
