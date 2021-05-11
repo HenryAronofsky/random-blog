@@ -37,9 +37,6 @@
 <body>
     <%- include('partials/navigationHeader', {pageTitle: "Cheese"}); %>
     <div id="body-seperator">
-        <% if (locals.currentUser) { %>
-            <%- include('./partials/userFooter'); %>
-        <% } %>
         <%- body %>
     </div>
 </body>

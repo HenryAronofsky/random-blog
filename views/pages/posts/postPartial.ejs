@@ -1,4 +1,3 @@
-<input type="hidden" value="<%= currentUser %>" id="inputUser">
 <hr>
 <div>
     <h2><%= thisPost.title %></h2>
@@ -22,6 +21,7 @@
     <div class="comment-section">
         <% thisPost.comments.reverse().forEach(comment => { %>
             <div>
+                <input type="hidden" value="<%= comment %>" id="commentInfo">
                 <% let thisComment = JSON.parse(comment) %>
                 <%- include('./comments/comments', {thisComment}) %>
             </div>

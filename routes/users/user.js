@@ -6,17 +6,19 @@ const Post = require('../../models/Post');
 router.get('/:userName', async (req, res) => {
     try {
         const user = await User.findOne({userName: req.params.userName})
+        const posts = await Post.find({author: req.params.userName})
         if (user == null) {
             res.redirect('/account')
         }
 
-        let currentUser =  req.user == undefined ? 'unauthorized' : req.user.userName
+        let currentUser =  req.user == undefined ? false : req.user.userName
 
         res.render('pages/users/user', {
             pageQuery: req.params.userName,
             currentUser: currentUser,
             user: user,
-            accountHome: true
+            accountHome: true,
+            userPosts: posts
         })
         return
     } catch (e) {

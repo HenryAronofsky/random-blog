@@ -1,4 +1,4 @@
-<% if (currentUser != 'unauthorized') { %>
+<% if (currentUser) { %>
     <a class="toggleEdit" href="#">Reply</a>
     <form style="display: none;" class="reply-make-form" action="/account/<%= pageQuery %>/posts/<%= thisPost._id %>/comments/<%= thisComment._id %>/reply" method="POST">
         <input type="text" name="reply" value="">

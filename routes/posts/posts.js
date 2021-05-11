@@ -15,7 +15,7 @@ router.get('/:userName/posts', async (req, res) => {
             res.redirect('/account')
             return
         }
-        let currentUser =  req.user == undefined ? 'unauthorized' : req.user.userName
+        let currentUser =  req.user == undefined ? false : req.user.userName
         res.render('pages/posts/posts', {
             userPosts: posts,
             pageQuery: req.params.userName,
@@ -72,7 +72,7 @@ router.get('/:userName/posts/:id', async (req, res) => {
             return
         }
 
-        let currentUser =  req.user == undefined ? 'unauthorized' : req.user.userName
+        let currentUser =  req.user == undefined ? false : req.user.userName
         res.render('pages/posts/view', {
             pageQuery: req.params.userName,
             thisPost: post,

@@ -1,3 +1,5 @@
+let thisComment = JSON.stringify($('#commentInfo').val())
+
 $(".comment-make-form").on("submit", function(e) {
     e.preventDefault()
     const queryUrl = $(this)[0].action.split("/")
@@ -18,8 +20,7 @@ $(".comment-make-form").on("submit", function(e) {
         contentType: "application/json; charset=utf-8"
     });
 
-    let userName = $('#inputUser').val()
-    $('.comment-section').prepend(`<p><b>${userName}</b> ${sanitizeData(data.content)}</p>`)
+    $('.comment-section').prepend(`<p><b>${thisComment.author}</b> ${sanitizeData(data.content)}</p>`)
 });
 
 $(".comment-delete-form").on("submit", function(e) {
@@ -145,3 +146,47 @@ function sanitizeData(data) {
     const reg = /[&<>"'/]/ig;
     return data.replace(reg, (match) => (map[match]));
 }
+
+$(".make-account-form").on("submit", function(e) {
+    e.preventDefault()
+
+    let data = {};
+    data.userNameSignUp = $(this).children()[2].value
+    data.password = $(this).children()[3].value
+    data.formType = 'SignUp'
+    let passwordConfirm = $(this).children()[4].value
+
+    let errorMessage = []
+    
+    if ($.trim(data.userNameSignUp) == '' || $.trim(data.password) == '') {
+        errorMessage.push("Please fill out all the fields")
+    }
+    if (data.userNameSignUp.length > 10) {
+        errorMessage.push("10 character cap for user name")
+    }
+    if (data.userNameSignUp.includes("/")) {
+        errorMessage.push("Illegal character \'/\' ")
+    }
+    if (data.password !== passwordConfirm) {
+        errorMessage.push("Passwords do not match")
+    }
+
+    if (errorMessage.length > 0) {
+        errorMessage.forEach(msg => {
+            $(this).children().first().next().append(`<div class="alert alert-danger alert-dismissible fade show">
+                <button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> ${msg}
+            </div>`)
+        })
+        return
+    }
+
+    console.log(data)
+    $.ajax({
+        type: "POST",
+        url: `/account`,
+        data: JSON.stringify(data),
+        contentType: "application/json; charset=utf-8"
+    });
+
+    $(this).parent().parent().parent().addClass('active');
+});

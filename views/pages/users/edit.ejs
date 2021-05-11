@@ -6,3 +6,6 @@
     <input type="text" name="description" value="<%= user.userDescription %>">
     <input type="submit" value="Update">
 </form>
+<form action="/account/<%= pageQuery %>?_method=DELETE" method="POST">
+    <input type="submit" value="Delete Account">
+</form>

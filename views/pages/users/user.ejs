@@ -1,10 +1,35 @@
-<div>
-    <%- include('../../partials/messageHandler'); %>
-    <% if (!locals.user.userImageJson.includes("defaultUser")) { %>
-        <img src="data:image/png;base64,<%= user.userImageJson %>" alt="profile picture">
-    <% } else { %>
-        <img src="<%= user.userImageJson %>" alt="profile picture">
-    <% } %>
-    <h2><%= user.userName %></h2>
-    <p><%= user.userDescription%></p>
+<div class="user-container">
+    <div class="user-info">
+        <%- include('../../partials/messageHandler'); %>
+        <% if (!locals.user.userImageJson.includes("defaultUser")) { %>
+            <img src="data:image/png;base64,<%= user.userImageJson %>" alt="profile picture">
+        <% } else { %>
+            <img src="<%= user.userImageJson %>" alt="profile picture">
+        <% } %>
+        <br>
+        <span class="user-header-info">
+            <h2 class="user-name-tag"><%= user.userName %></h2>
+            <% if (locals.accountHome && currentUser == pageQuery) { %>
+                <span class="user-edit-account-span">
+                    <i class="fa fa-circle user-edit-separator" aria-hidden="true"></i>
+                    <a href="/account/<%= pageQuery %>/edit">Edit Account</a>
+                </span>
+            <% } %>
+        </span>
+        <p><%= user.userDescription%></p>
+    </div>
+    <div class="user-posts-container">
+        <%- include('../../partials/messageHandler'); %>
+        <% if (userPosts.length != 0) { %>
+            <%- include('../../partials/newPost'); %>
+            <% userPosts.forEach(post => { %>
+                <%- include('../posts/postPartial', {thisPost: post}); %>
+            <% }) %>
+        <% } else { %>
+            <h3 class="user-posts-empty"><%= pageQuery %> Has No Posts</h3>
+            <p>
+                <%- include('../../partials/newPost'); %>
+            </p>
+        <% } %>
+    </div>
 </div>
