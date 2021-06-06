@@ -21,13 +21,19 @@
     <div class="user-posts-container">
         <%- include('../../partials/messageHandler'); %>
         <% if (userPosts.length != 0) { %>
-            <%- include('../../partials/newPost'); %>
+            <% if (login && currentUser == pageQuery)  { %>
+                <i class="fa fa-circle" aria-hidden="true"></i>
+                <a class="toggleEdit" href="/account/<%= currentUser %>/posts/new">New Post</a>
+            <% } %>
             <% userPosts.forEach(post => { %>
                 <%- include('../posts/postPartial', {thisPost: post}); %>
             <% }) %>
         <% } else { %>
             <h3 class="user-posts-empty"><%= pageQuery %> Has No Posts</h3>
-            <%- include('../../partials/newPost'); %>
+            <% if (login && currentUser == pageQuery)  { %>
+                <i class="fa fa-circle" aria-hidden="true"></i>
+                <a class="toggleEdit" href="/account/<%= currentUser %>/posts/new">New Post</a>
+            <% } %>
         <% } %>
     </div>
 </div>

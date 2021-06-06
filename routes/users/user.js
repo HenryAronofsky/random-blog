@@ -7,6 +7,7 @@ router.get('/:userName', async (req, res) => {
     try {
         const user = await User.findOne({userName: req.params.userName})
         const posts = await Post.find({author: req.params.userName})
+
         if (user == null) {
             res.redirect('/account')
         }

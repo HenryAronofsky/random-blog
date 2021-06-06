@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 const User = require('../../models/User');
 const Post = require('../../models/Post');
+const Category = require('../../models/Category')
 
 router.get('/:userName/posts', async (req, res) => {
     try {
@@ -27,20 +28,28 @@ router.get('/:userName/posts', async (req, res) => {
 })
 
 router.get('/:userName/posts/new', isAuthenticated, async (req, res) => {
-    res.render('pages/posts/new', {
-        pageQuery: req.params.userName,
-        currentUser: req.user.userName
-    })
+    try {
+        const categories = await Category.find({})
+        res.render('pages/posts/new', {
+            pageQuery: req.params.userName,
+            currentUser: req.user.userName,
+            categories: categories
+        })
+    } catch {
+
+    }
 })
 
 router.post('/:userName/posts/new', isAuthenticated, async (req, res) => {
     let parsedImage = req.body.file != null && req.body.file != '' ? JSON.parse(req.body.file).data : ''
     const dateReference = new Date()
+    const categories = await Category.find({})
 
     const newPost = new Post({
         title: req.body.title,
         content: req.body.content,
         imageJson: parsedImage,
+        category: req.body.category,
         author: req.params.userName,
         date: `${String(dateReference.getMonth() + 1).padStart(2, '0')}/${String(dateReference.getDate()).padStart(2, '0')}/${dateReference.getFullYear()}`
     })
@@ -48,12 +57,14 @@ router.post('/:userName/posts/new', isAuthenticated, async (req, res) => {
     if (newPost.title.trim().length == 0 || newPost.content.trim().length == 0) {
         res.render('pages/posts/new', {
             pageQuery: req.params.userName,
-            errorMessage: ["Please fill out all text fields"]
+            errorMessage: ["Please fill out all text fields"],
+            categories: categories
         })
         return
     }
 
     try {
+        console.log(newPost)
         await newPost.save()
         res.redirect(`/account/${req.params.userName}/posts/${newPost._id}`)
     } catch (e) {
@@ -85,11 +96,13 @@ router.get('/:userName/posts/:id', async (req, res) => {
 
 router.get('/:userName/posts/:id/edit', isAuthenticated, async (req, res) => {
     try {
+        const categories = await Category.find({})
         const post = await Post.find({_id: req.params.id, author: req.params.userName})
         res.render('pages/posts/edit', {
             pageQuery: req.params.userName,
             post: post[0],
-            currentUser: req.user.userName
+            currentUser: req.user.userName,
+            categories: categories
         })
     } catch {
         res.redirect('/account')
@@ -132,6 +145,7 @@ router.delete('/:userName/posts/:id', isAuthenticated, async (req, res) => {
 })
 
 function isAuthenticated(req, res, next) {
+    if (req.user == undefined) res.redirect('/account')
     if (req.user.userName == req.params.userName) {
         next()
     } else {

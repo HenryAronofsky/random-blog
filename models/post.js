@@ -12,6 +12,9 @@ const postSchema = new mongoose.Schema({
     imageJson: {
         type: String
     },
+    category: {
+        type: String
+    },
     author: {
         type: String,
         required: true,

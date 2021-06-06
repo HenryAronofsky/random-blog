@@ -51,6 +51,7 @@ const accountRouter = require('./routes/users/account');
 const userRouter = require('./routes/users/user');
 const postRouter = require('./routes/posts/posts');
 const commentRouter = require('./routes/comments/comments');
+const categoryRouter = require('./routes/categories/categories');
 
 app.use('/', indexRouter);
 app.use('/trending', trendingRouter);
@@ -58,6 +59,7 @@ app.use('/account', accountRouter(passport));
 app.use('/account', userRouter);
 app.use('/account', postRouter);
 app.use('/account', commentRouter);
+app.use('/category', categoryRouter);
 app.get('*', function(req, res) {
     res.status(404).render('pages/error404', {
         pageQuery: "404"

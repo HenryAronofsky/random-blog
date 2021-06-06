@@ -4,4 +4,16 @@
 <input type="text" name="title" value="<%= locals.post ? post.title : '' %>">
 <h2>Content</h2>
 <input type="text" name="content" value="<%= locals.post ? post.content : '' %>">
+<h2>Category</h2>
+<select name="category">
+    <option selected label="" value=""></option>
+    <% categories.forEach(category => { %>
+        <option label="<%= category.category %>" value="<%= category.category %>">
+    <% }) %>
+    <% if (categories.length == 0)  { %>
+        <option selected label="There are no categories" value=""></option>
+    <% } %>
+</select>
+<br>
+<br>
 <input type="submit" value="Post">

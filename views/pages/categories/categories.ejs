@@ -1,0 +1,13 @@
+<%- include('../../partials/messageHandler') %>
+<% if (locals.isLoggedIn == false) { %>
+    <h5>Please login before creating a category</h5>
+<% } %>
+<form action="/category" method="POST">
+    <h2>Category:</h2>
+    <input type="text" name="category">
+    <input type="submit">
+</form>
+
+<% categories.forEach(category => { %>
+    <a href="/category/<%= category.category %>"><%= category.category %></a>
+<% }) %>
