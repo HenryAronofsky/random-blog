@@ -1,4 +1,7 @@
 <% if (login && currentUser == pageQuery)  { %>
     <i class="fa fa-circle" aria-hidden="true"></i>
-    <a href="/account/<%= pageQuery %>/posts/new">New Post</a>
+    <a class="toggleEdit" href="/account/<%= currentUser %>/posts/new">New Post</a>
+    <form class="new-post-form" action="" method="POST" style="display: none;">
+        <%- include('./postForm'); %>
+    </form>
 <% } %>

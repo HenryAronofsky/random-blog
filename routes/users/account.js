@@ -19,8 +19,9 @@ module.exports = function(passport) {
         if ('SignUp' === req.body.formType) {
             try {
                 let name = req.body.userNameSignUp
-                let password = req.body.password
-                
+                let password = req.body.userPasswordSignUp
+                let passwordConfirm = req.body.userPasswordSignUpConfirm
+
                 const hashedPassword = await bcrypt.hash(password, 10);
                 
                 const newUser = new User({
@@ -28,14 +29,48 @@ module.exports = function(passport) {
                     userPassword: hashedPassword
                 });
 
-                await User.findOne({ userName: newUser.userName.trim()})
+                let errorMessage = []
+            
+                if (newUser.userName.trim().length == 0 || password.trim().length == 0) {
+                    errorMessage.push("Please fill out all the fields")
+                }
+                if (newUser.userName.length > 10) {
+                    errorMessage.push("10 character cap for user name")
+                }
+                if (newUser.userName.includes("/")) {
+                    errorMessage.push("Illegal character")
+                }
+                if (password !== passwordConfirm) {
+                    errorMessage.push("Passwords do not match")
+                }
+
+                await User.findOne({ userName: newUser.userName })
                     .then(user => {
-                        return
+                        if (user) {
+                            errorMessage.push("Username Is Already In Use")
+                        }
                     })
 
+                if (errorMessage.length > 0) {
+                    res.render('pages/users/account', {
+                        pageQuery: "Account",
+                        errorMessage: errorMessage
+                    })
+                    return
+                }
+
                 await newUser.save()
+                res.render('pages/users/account', {
+                    pageQuery: "Account",
+                    location: "login",
+                    successMessage: "You can now login"
+                })
             } catch (e) {
                 console.log(e)
+                res.render('pages/users/account', {
+                    errorMessage: ["Welp... The server's down. Come back later"],
+                    pageQuery: "Account"
+                });
             }
         }  else if ('SignIn' === req.body.formType) {
             passport.authenticate('local', {failureFlash: true}, function(err, user, info) {
